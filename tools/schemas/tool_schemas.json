@@ -1,0 +1,152 @@
+[
+  {
+    "name": "sec_filing_search",
+    "description": "Search and retrieve SEC EDGAR filings for a publicly traded US company. Use this when you need official regulatory disclosures: 10-K (annual), 10-Q (quarterly), 8-K (material events), or DEF 14A (proxy statements). This is the Tier-1 (highest reliability) source.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "ticker": {"type": "string", "description": "Stock ticker symbol, e.g. AAPL, MSFT"},
+        "filing_type": {"type": "string", "enum": ["10-K", "10-Q", "8-K", "DEF 14A"]},
+        "year": {"type": "integer", "description": "Filing year (defaults to most recent)"}
+      },
+      "required": ["ticker", "filing_type"]
+    }
+  },
+  {
+    "name": "web_search",
+    "description": "Perform a general web search for current news, analysis, or commentary about a company or financial topic. Use for information not available in structured sources.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "query": {"type": "string"},
+        "num_results": {"type": "integer", "default": 10},
+        "date_range": {"type": "string", "description": "Optional, e.g. 'past_month'"}
+      },
+      "required": ["query"]
+    }
+  },
+  {
+    "name": "earnings_transcript",
+    "description": "Retrieve the earnings call transcript for a specific company, quarter, and year, including the analyst Q&A section.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "ticker": {"type": "string"},
+        "quarter": {"type": "string", "enum": ["Q1", "Q2", "Q3", "Q4"]},
+        "year": {"type": "integer"}
+      },
+      "required": ["ticker", "quarter", "year"]
+    }
+  },
+  {
+    "name": "financial_data_api",
+    "description": "Retrieve structured financial statement data: income statement, balance sheet, cash flow, and key ratios. This is a Tier-2 reliability source.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "ticker": {"type": "string"},
+        "statement_type": {"type": "string", "enum": ["income_statement", "balance_sheet", "cash_flow", "ratios"]},
+        "period": {"type": "string", "enum": ["annual", "quarterly"], "default": "annual"},
+        "years": {"type": "integer", "default": 3}
+      },
+      "required": ["ticker", "statement_type"]
+    }
+  },
+  {
+    "name": "news_sentiment",
+    "description": "Analyze the sentiment of recent news articles about a company or topic using NLP, returning per-article summaries plus an overall sentiment score.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "query": {"type": "string"},
+        "num_articles": {"type": "integer", "default": 8},
+        "lookback_days": {"type": "integer", "default": 30}
+      },
+      "required": ["query"]
+    }
+  },
+  {
+    "name": "vector_db_search",
+    "description": "Search the agent's long-term memory (vector database) for previously researched information about a company or topic. Always check this before making redundant external calls.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "query": {"type": "string"},
+        "top_k": {"type": "integer", "default": 5},
+        "filter": {"type": "object", "description": "Optional metadata filter, e.g. {\"ticker\": \"TSLA\"}"}
+      },
+      "required": ["query"]
+    }
+  },
+  {
+    "name": "vector_db_store",
+    "description": "Store new research findings in the agent's long-term memory for future retrieval.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "content": {"type": "string"},
+        "metadata": {"type": "object", "description": "ticker, date, source_type, etc."}
+      },
+      "required": ["content", "metadata"]
+    }
+  },
+  {
+    "name": "company_profile",
+    "description": "Retrieve basic company information: sector, industry, market cap, key executives, and a short description.",
+    "parameters": {
+      "type": "object",
+      "properties": {"ticker": {"type": "string"}},
+      "required": ["ticker"]
+    }
+  },
+  {
+    "name": "peer_comparison",
+    "description": "Identify industry peers for a company and retrieve comparative financial metrics across the peer set.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "ticker": {"type": "string"},
+        "num_peers": {"type": "integer", "default": 3},
+        "metrics": {"type": "array", "items": {"type": "string"}}
+      },
+      "required": ["ticker"]
+    }
+  },
+  {
+    "name": "calculation_engine",
+    "description": "Perform financial calculations: growth rates, ratios, a simplified DCF, or basic statistics, on data already gathered.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "calculation_type": {"type": "string", "enum": ["growth_rate", "ratio", "dcf", "stats"]},
+        "inputs": {"type": "object"}
+      },
+      "required": ["calculation_type", "inputs"]
+    }
+  },
+  {
+    "name": "fact_checker",
+    "description": "Cross-reference a specific numerical or factual claim against multiple sources already gathered (or newly retrieved) to verify accuracy and assign a confidence score.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "claim": {"type": "string"},
+        "sources": {"type": "array", "items": {"type": "string"}}
+      },
+      "required": ["claim"]
+    }
+  },
+  {
+    "name": "report_generator",
+    "description": "Format all researched, synthesized data into a structured investment research report in markdown, following the standard section template.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "template": {"type": "string", "default": "standard_research_report"},
+        "sections": {"type": "object"},
+        "sources": {"type": "array", "items": {"type": "string"}}
+      },
+      "required": ["sections"]
+    }
+  }
+]

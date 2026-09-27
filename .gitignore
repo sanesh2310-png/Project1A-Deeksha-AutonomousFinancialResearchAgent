@@ -1,0 +1,7 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+memory/.vector_store.json
+memory/.episodic_store.json
+.env
