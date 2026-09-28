@@ -1,9 +1,21 @@
 {
-  "intern_identifier": "your GitHub or portal login ID",
-"intern_name": "Deeksha [your surname]",
-"intern_email": "your email",
-"submission_date": "2026-09-28T00:00:00Z",
-"github_repo_url": "https://github.com/ZethetaIntern/Project1A-Deeksha-AutonomousFinancialResearchAgent",
+  "intern_identifier": "[your portal / OAuth login ID]",
+  "intern_name": "Deeksha [your surname]",
+  "intern_email": "[your email]",
+  "project_code": "1A",
+  "project_title": "Autonomous Financial Research Agent with Multi-Source Synthesis",
+  "submission_type": "github",
+  "submission_date": "2026-09-28T00:00:00Z",
+  "tech_stack": [
+    "Python",
+    "Custom ReAct/Plan-and-Execute agent core",
+    "Anthropic API (optional)",
+    "Custom hashing-trick vector store",
+    "SEC EDGAR (mock fallback)",
+    "Financial Data API (mock fallback)"
+  ],
+  "duration_days": 15,
+  "github_repo_url": "https://github.com/ZethetaIntern/Project1A-Deeksha-AutonomousFinancialResearchAgent",
   "assessment_criteria": {
     "architecture_design": true,
     "tool_orchestration": true,
